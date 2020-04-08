@@ -27,6 +27,6 @@ class ProfileImageController extends Controller
             $profileImage->save();
             $images[] = $profileImage;
         }
-        return new ProfileImages(collect($images)); // TODO: return array of images
+        return new ProfileImages(collect($images));
     }
 }
