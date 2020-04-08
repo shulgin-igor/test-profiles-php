@@ -5,15 +5,21 @@ import ListComponent from "./components/ListComponent";
 import store from './store';
 import CreateComponent from "./components/CreateComponent";
 import UpdateComponent from "./components/UpdateComponent";
+import App from "./components/AppComponent";
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueRouter);
 
+Vue.use(VueAxios, axios);
+Vue.axios.defaults.baseURL = '/api';
+
 const routes = [
-    { path: '/', component: ListComponent },
-    { path: '/create', component: CreateComponent },
-    { path: '/update', component: UpdateComponent },
+    { path: '/', name: 'list', component: ListComponent },
+    { path: '/create', name: 'create', component: CreateComponent },
+    { path: '/update/:id', name: 'update', component: UpdateComponent, props: true },
 ];
 
 const router = new VueRouter({
@@ -21,7 +27,8 @@ const router = new VueRouter({
 });
 
 const app = new Vue({
-    // el: '#app',
+    el: '#app',
     router,
     store,
-}).$mount('#app');
+    render: h => h(App)
+});

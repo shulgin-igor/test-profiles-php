@@ -10,11 +10,10 @@
     </head>
     <body>
 
-    <div id="app">
-        <router-view></router-view>
+    <div id="app-wrapper">
+        <div id="app"></div>
     </div>
 
     <script src="{{ (env('APP_ENV') === 'development') ? mix('js/app.js') : asset('js/app.js') }}"></script>
-    <script src="/js/app.js"></script>
     </body>
 </html>
