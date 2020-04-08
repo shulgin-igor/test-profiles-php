@@ -16,7 +16,7 @@
         </div>
         <hr>
         <div class="form-group d-flex justify-content-end">
-            <router-link to="/" class="btn btn-secondary">Back to list</router-link>
+            <router-link to="/" class="btn btn-secondary">Back to the list</router-link>
             <button type="submit" class="btn btn-success">Save</button>
         </div>
         <input type="file" @change="selectFile" ref="image">
@@ -72,7 +72,7 @@
 
                 if (valid) {
                     reader.onload = (e) => {
-                        this.profile.images.push({url: e.target.result});
+                        this.$store.dispatch('selectImage', {url: e.target.result});
                     };
 
                     reader.readAsDataURL(file);

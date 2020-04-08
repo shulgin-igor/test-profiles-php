@@ -32,7 +32,11 @@ export default new Vuex.Store({
                 }
                 context.commit('profileSelected', profile);
             } catch (e) {
-                // TODO: check error code
+                if (e.response.status === 404) {
+                    alert('Unable to locate specified profile');
+                } else {
+                    alert('Unable to retrieve profile data');
+                }
             }
         },
         async createProfile(context, data) {
@@ -52,20 +56,27 @@ export default new Vuex.Store({
                 await ProfilesService.delete(id);
                 context.commit('profileRemoved', id);
             } catch (e) {
-                // TODO: check error code
+                if (e.response === 422) {
+                    alert('Invalid data');
+                } else {
+                    alert('Unable to remove profile');
+                }
             }
         },
         async uploadImages(context, images) {
+            let result = [];
             try {
-                let result = [];
                 if (images.get('images[]')) {
                     const {data} = await ProfilesService.uploadImages(context.state.selectedProfile.id, images);
                     result = data.data;
                 }
-                context.commit('imagesUploaded', result);
             } catch (e) {
-                // TODO: check error code
+                alert('Unable to upload images');
             }
+            context.commit('imagesUploaded', result);
+        },
+        selectImage(context, image) {
+            context.commit('imageSelected', image);
         }
     },
     mutations: {
@@ -76,14 +87,23 @@ export default new Vuex.Store({
             state.selectedProfile = profile;
         },
         profileSaved(state, profile) {
-            state.selectedProfile = profile;
+            state.selectedProfile = {...profile, images: state.selectedProfile.images};
         },
         profileRemoved(state, id) {
             const index = state.profiles.findIndex(profile => profile.id === id);
             state.profiles.splice(index, 1);
         },
         imagesUploaded(state, images) {
-            state.selectedProfile.images = images.concat(state.selectedProfile.images);
+            state.selectedProfile = {
+                ...state.selectedProfile,
+                images: state.selectedProfile.images.filter(i => !i.local).images.concat(images),
+            };
+        },
+        imageSelected(state, image) {
+            state.selectedProfile = {
+                ...state,
+                images: [...state.selectedProfile.images, {...image, local: true}],
+            };
         }
     }
 })

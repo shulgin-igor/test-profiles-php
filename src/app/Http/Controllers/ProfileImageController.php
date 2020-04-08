@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProfileImage;
 use App\Http\Resources\ProfileImages;
 use App\ProfileImage;
-use Illuminate\Http\Request;
 
 class ProfileImageController extends Controller
 {
@@ -15,7 +15,7 @@ class ProfileImageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($profile, Request $request)
+    public function store($profile, StoreProfileImage $request)
     {
         $files = $request->file('images');
         $images = [];
