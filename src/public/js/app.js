@@ -64555,11 +64555,11 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_2__
       state.selectedProfile = _objectSpread({}, state.selectedProfile, {
         images: state.selectedProfile.images.filter(function (i) {
           return !i.local;
-        }).images.concat(images)
+        }).concat(images)
       });
     },
     imageSelected: function imageSelected(state, image) {
-      state.selectedProfile = _objectSpread({}, state, {
+      state.selectedProfile = _objectSpread({}, state.selectedProfile, {
         images: [].concat(_toConsumableArray(state.selectedProfile.images), [_objectSpread({}, image, {
           local: true
         })])

@@ -96,12 +96,12 @@ export default new Vuex.Store({
         imagesUploaded(state, images) {
             state.selectedProfile = {
                 ...state.selectedProfile,
-                images: state.selectedProfile.images.filter(i => !i.local).images.concat(images),
+                images: state.selectedProfile.images.filter(i => !i.local).concat(images),
             };
         },
         imageSelected(state, image) {
             state.selectedProfile = {
-                ...state,
+                ...state.selectedProfile,
                 images: [...state.selectedProfile.images, {...image, local: true}],
             };
         }
